@@ -34,7 +34,7 @@ define Package/libmimalloc/default
   SECTION:=libs
   CATEGORY:=Libraries
   URL:=https://github.com/microsoft/mimalloc
-  DEPENDS:= +librt +libatomic +libstdcpp
+  DEPENDS:= +librt +libatomic
   TITLE:=mimalloc general purpose allocator
 endef
 
@@ -70,7 +70,7 @@ CMAKE_OPTIONS+=\
   -DMI_LOCAL_DYNAMIC_TLS=OFF\
   -DMI_OVERRIDE=ON\
   -DMI_SEE_ASM=OFF\
-  -DMI_USE_CXX=ON
+  -DMI_USE_CXX=OFF
 
 ifeq ($(BUILD_VARIANT),secure)
   CMAKE_OPTIONS+=-DMI_SECURE=ON

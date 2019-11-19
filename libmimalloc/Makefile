@@ -30,12 +30,18 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
-define Package/libmimalloc
+define Package/libmimalloc/default
   SECTION:=libs
   CATEGORY:=Libraries
   URL:=https://github.com/microsoft/mimalloc
-  DEPENDS:= +librt
+  DEPENDS:= +librt +libstdcpp
   TITLE:=mimalloc general purpose allocator
+endef
+
+define Package/libmimalloc
+  $(call Package/libmimalloc/default)
+  VARIANT:=default
+  DEFAULT_VARIANT:=1
 endef
 
 define Package/libmimalloc/description
@@ -44,7 +50,7 @@ define Package/libmimalloc/description
 endef
 
 define Package/libmimalloc-secure
-  $(call Package/libmimalloc)
+  $(call Package/libmimalloc/default)
   TITLE+=(secure)
   VARIANT:=secure
 endef
@@ -52,7 +58,7 @@ endef
 define Package/libmimalloc-secure/description
   $(call Package/libmimalloc/description)
 
-  mimalloc in secure mode, uses guard pages, randomized allocation, 
+  mimalloc in secure mode, uses guard pages, randomized allocation,
   encrypted free lists, etc. to protect against various heap vulnerabilities.
   The performance penalty is only around 3% on average over our benchmarks.
 endef
@@ -64,12 +70,12 @@ CMAKE_OPTIONS+=\
   -DMI_LOCAL_DYNAMIC_TLS=OFF\
   -DMI_OVERRIDE=ON\
   -DMI_SEE_ASM=OFF\
-  -DMI_USE_CXX=OFF
+  -DMI_USE_CXX=ON
 
 ifeq ($(BUILD_VARIANT),secure)
   CMAKE_OPTIONS+=-DMI_SECURE=ON
 else
-  CMAKE_OPTIONS+=-DMI_SECURE=ON
+  CMAKE_OPTIONS+=-DMI_SECURE=OFF
 endif
 
 define Package/libmimalloc/install

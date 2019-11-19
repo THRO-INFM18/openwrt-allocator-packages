@@ -7,17 +7,17 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=libjemalloc
+PKG_NAME:=jemalloc
 PKG_VERSION:=5.2.1
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
-#PKG_SOURCE_URL:=https://codeload.github.com/jemalloc/jemalloc/tar.gz/$(PKG_VERSION)?
-#PKG_HASH:=ed51b0b37098af4ca6ed31c22324635263f8ad6471889e0592a9c0dba9136aea
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_URL:=https://github.com/jemalloc/jemalloc.git
-PKG_SOURCE_VERSION:=ea6b3e973b477b8061e0076bb257dbd7f3faa756
-PKG_MIRROR_HASH:=a39f299fbdb6c79699dbf101c61313a78c7d184423954b441464904d483e47a8
+PKG_SOURCE_URL:=https://codeload.github.com/jemalloc/jemalloc/tar.gz/$(PKG_VERSION)?
+PKG_HASH:=ed51b0b37098af4ca6ed31c22324635263f8ad6471889e0592a9c0dba9136aea
+#PKG_SOURCE_PROTO:=git
+#PKG_SOURCE_URL:=https://github.com/jemalloc/jemalloc.git
+#PKG_SOURCE_VERSION:=ea6b3e973b477b8061e0076bb257dbd7f3faa756
+#PKG_MIRROR_HASH:=a39f299fbdb6c79699dbf101c61313a78c7d184423954b441464904d483e47a8
 
 PKG_MAINTAINER:=Johann Neuhauser <johann@it-neuhauser.de>
 ### ??? LICENCE ???
@@ -32,7 +32,7 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/autotools.mk
 
-define Package/libjemalloc
+define Package/jemalloc
   SECTION:=libs
   CATEGORY:=Libraries
   URL:=https://github.com/jemalloc/jemalloc
@@ -40,7 +40,7 @@ define Package/libjemalloc
   TITLE:=jemalloc general purpose allocator
 endef
 
-define Package/libjemalloc/description
+define Package/jemalloc/description
   jemalloc is a general purpose malloc(3) implementation that emphasizes
   fragmentation avoidance and scalable concurrency support.  jemalloc first came
   into use as the FreeBSD libc allocator in 2005, and since then it has found its
@@ -83,9 +83,9 @@ ifneq (,$(filter $(ARCH),powerpc))
   TARGET_CPPFLAGS += -maltivec
 endif
 
-define Package/libjemalloc/install
+define Package/jemalloc/install
 	$(INSTALL_DIR) $(1)/usr/lib
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/*.so* $(1)/usr/lib/
 endef
 
-$(eval $(call BuildPackage,libjemalloc))
+$(eval $(call BuildPackage,jemalloc))

@@ -28,7 +28,7 @@ PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=1
 
-include $(INCLUDE_DIR)/uclibc++.mk
+#include $(INCLUDE_DIR)/uclibc++.mk
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/autotools.mk
 
@@ -36,7 +36,7 @@ define Package/libjemalloc
   SECTION:=libs
   CATEGORY:=Libraries
   URL:=https://github.com/jemalloc/jemalloc
-  DEPENDS:= +librt
+  DEPENDS:= +librt +libstdcpp
   TITLE:=jemalloc general purpose allocator
 endef
 

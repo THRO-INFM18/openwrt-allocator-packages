@@ -34,7 +34,7 @@ define Package/libmimalloc/default
   SECTION:=libs
   CATEGORY:=Libraries
   URL:=https://github.com/microsoft/mimalloc
-  DEPENDS:= +librt +libstdcpp
+  DEPENDS:= +librt +libatomic +libstdcpp
   TITLE:=mimalloc general purpose allocator
 endef
 

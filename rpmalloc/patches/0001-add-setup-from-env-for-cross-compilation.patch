@@ -1,0 +1,60 @@
+From e0dda7c32fdba05bb8bcc503a28927e6316c97ae Mon Sep 17 00:00:00 2001
+From: Johann Neuhauser <johann@it-neuhauser.de>
+Date: Thu, 28 Nov 2019 16:34:13 +0100
+Subject: [PATCH] gcc.py: use binaries and add flags from env
+
+Signed-off-by: Johann Neuhauser <johann@it-neuhauser.de>
+---
+ build/ninja/gcc.py | 22 +++++++++++++---------
+ 1 file changed, 13 insertions(+), 9 deletions(-)
+
+diff --git a/build/ninja/gcc.py b/build/ninja/gcc.py
+index 21fc2e4..74eb831 100644
+--- a/build/ninja/gcc.py
++++ b/build/ninja/gcc.py
+@@ -13,19 +13,19 @@ def initialize(self, project, archs, configs, includepaths, dependlibs, libpaths
+     self.toolchain = ''
+     self.includepaths = []
+     self.libpaths = libpaths
+-    self.ccompiler = 'gcc'
+-    self.cxxcompiler = 'g++'
+-    self.archiver = 'ar'
+-    self.linker = 'gcc'
+-    self.cxxlinker = 'g++'
++    self.ccompiler = os.environ.get('CC') or 'gcc'
++    self.cxxcompiler = os.environ.get('CXX') or 'g++'
++    self.archiver = os.environ.get('AR') or 'ar'
++    self.linker = os.environ.get('CC') or 'gcc'
++    self.cxxlinker = os.environ.get('CXX') or 'g++'
+ 
+     #Command definitions
+-    self.cccmd = '$toolchain$cc -MMD -MT $out -MF $out.d $includepaths $moreincludepaths $cflags $carchflags $cconfigflags $cmoreflags -c $in -o $out'
+-    self.cxxcmd = '$toolchain$cxx -MMD -MT $out -MF $out.d $includepaths $moreincludepaths $cxxflags $carchflags $cconfigflags $cmoreflags -c $in -o $out'
++    self.cccmd = '$toolchain$cc -MMD -MT $out -MF $out.d $includepaths $moreincludepaths $cflags $carchflags $cconfigflags $cmoreflags $cflagsenv -c $in -o $out'
++    self.cxxcmd = '$toolchain$cxx -MMD -MT $out -MF $out.d $includepaths $moreincludepaths $cxxflags $carchflags $cconfigflags $cmoreflags $cxxflagsenv -c $in -o $out'
+     self.ccdeps = 'gcc'
+     self.ccdepfile = '$out.d'
+-    self.arcmd = self.rmcmd('$out') + ' && $toolchain$ar crsD $ararchflags $arflags $out $in'
+-    self.linkcmd = '$toolchain$link $libpaths $configlibpaths $linkflags $linkarchflags $linkconfigflags -o $out $in $libs $archlibs $oslibs'
++    self.arcmd = self.rmcmd('$out') + ' && $toolchain$ar crsD $ararchflags $arflags $arflagsenv $out $in'
++    self.linkcmd = '$toolchain$link $libpaths $configlibpaths $linkflags $linkarchflags $linkconfigflags $linkflagsenv -o $out $in $libs $archlibs $oslibs'
+ 
+     #Base flags
+     self.cflags = ['-D' + project.upper() + '_COMPILE=1',
+@@ -118,12 +118,16 @@ def write_variables(self, writer):
+     writer.variable('carchflags', '')
+     writer.variable('cconfigflags', '')
+     writer.variable('cmoreflags', self.cmoreflags)
++    writer.variable('cflagsenv', (os.environ.get('CFLAGS') or '').split())
++    writer.variable('cxxflagsenv', (os.environ.get('CXXFLAGS') or '').split())
+     writer.variable('arflags', self.arflags)
+     writer.variable('ararchflags', '')
+     writer.variable('arconfigflags', '')
++    writer.variable('arflagsenv', (os.environ.get('ARFLAGS') or '').split())
+     writer.variable('linkflags', self.linkflags)
+     writer.variable('linkarchflags', '')
+     writer.variable('linkconfigflags', '')
++    writer.variable('linkflagsenv', (os.environ.get('LDFLAGS') or '').split())
+     writer.variable('libs', '')
+     writer.variable('libpaths', self.make_libpaths(self.libpaths))
+     writer.variable('configlibpaths', '')

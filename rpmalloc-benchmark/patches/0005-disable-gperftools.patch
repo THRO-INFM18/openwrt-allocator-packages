@@ -1,0 +1,38 @@
+--- a/configure.py
++++ b/configure.py
+@@ -56,35 +56,6 @@ else:
+ if not target.is_android():
+ 	generator.bin(module = 'ptmalloc3', sources = ['benchmark.c', 'ptmalloc3.c', 'malloc.c'], binname = 'benchmark-ptmalloc3', basepath = 'benchmark', implicit_deps = [benchmark_lib, test_lib], libs = ['benchmark', 'test'], includepaths = includepaths + platform_includepaths, variables = variables)
+ 
+-gperftoolsincludepaths = [
+-	os.path.join('benchmark', 'gperftools', 'src'),
+-	os.path.join('benchmark', 'gperftools', 'src', 'base'),
+-	os.path.join('benchmark', 'gperftools', 'src', target.get())
+-]
+-gperftoolsbasesources = [
+-	'dynamic_annotations.c', 'linuxthreads.cc', 'logging.cc', 'low_level_alloc.cc', 'spinlock.cc',
+-	'spinlock_internal.cc', 'sysinfo.cc'
+-]
+-if not target.is_windows():
+-	gperftoolsbasesources += ['thread_lister.c']
+-gperftoolsbasesources = [os.path.join('src', 'base', path) for path in gperftoolsbasesources]
+-gperftoolssources = [
+-	'central_freelist.cc', 'common.cc', 'internal_logging.cc',
+-	'malloc_extension.cc', 'malloc_hook.cc', 'memfs_malloc.cc', 
+-	'page_heap.cc', 'sampler.cc', 'stack_trace_table.cc',
+-	'static_vars.cc', 'span.cc', 'symbolize.cc', 'tcmalloc.cc', 'thread_cache.cc'
+-]
+-if not target.is_windows():
+-	gperftoolssources += ['maybe_threads.cc', 'system-alloc.cc']
+-if target.is_windows():
+-	gperftoolssources += [os.path.join('windows', 'port.cc'), os.path.join('windows', 'system-alloc.cc')]
+-gperftoolssources = [os.path.join('src', path) for path in gperftoolssources]
+-if not target.is_android():
+-	gperf_variables = merge_variables({'runtime': 'c++', 'defines': ['NO_TCMALLOC_SAMPLES', 'NO_HEAP_CHECK']}, variables)
+-	gperftools_lib = generator.lib(module = 'gperftools', sources = gperftoolsbasesources + gperftoolssources, basepath = 'benchmark', includepaths = includepaths + gperftoolsincludepaths, variables = gperf_variables)
+-	gperftools_depend_libs = ['gperftools', 'benchmark', 'test']
+-	generator.bin(module = 'gperftools', sources = ['benchmark.c'], binname = 'benchmark-tcmalloc', basepath = 'benchmark', implicit_deps = [gperftools_lib, benchmark_lib, test_lib], libs = gperftools_depend_libs, includepaths = includepaths, variables = gperf_variables)
+-
+ jemallocincludepaths = [
+ 	os.path.join('benchmark', 'jemalloc', 'include'),
+ 	os.path.join('benchmark', 'jemalloc', 'include', 'jemalloc'),

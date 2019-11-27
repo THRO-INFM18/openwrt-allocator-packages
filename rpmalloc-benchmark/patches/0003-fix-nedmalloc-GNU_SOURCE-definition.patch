@@ -1,0 +1,12 @@
+--- a/benchmark/nedmalloc/malloc.c.h
++++ b/benchmark/nedmalloc/malloc.c.h
+@@ -619,7 +619,9 @@ MAX_RELEASE_CHECK_RATE   default: 4095 u
+ #ifndef HAVE_MREMAP
+ #ifdef linux
+ #define HAVE_MREMAP 1
++#ifndef _GNU_SOURCE
+ #define _GNU_SOURCE /* Turns on mremap() definition */
++#endif /* _GNU_SOURCE */
+ #else   /* linux */
+ #define HAVE_MREMAP 0
+ #endif  /* linux */

@@ -32,6 +32,9 @@ define Package/barnes/description
   No one knows something about it, but it´s used for benchmarking malloc implementations.
 endef
 
+CMAKE_OPTIONS+=\
+	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+
 define Package/barnes/install
 	$(INSTALL_DIR) $(1)/usr/local/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/bin/barnes $(1)/usr/local/bin/

@@ -32,10 +32,8 @@ define Package/shbench/description
   No one knows something about it, but it´s used for benchmarking malloc implementations.
 endef
 
-define Build/Prepare
-	mkdir -p $(PKG_BUILD_DIR)
-	$(CP) ./src/* $(PKG_BUILD_DIR)/
-endef
+CMAKE_OPTIONS+=\
+	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 define Package/shbench/install
 	$(INSTALL_DIR) $(1)/usr/local/bin

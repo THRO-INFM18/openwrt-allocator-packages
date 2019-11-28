@@ -1,0 +1,11 @@
+--- a/configure
++++ b/configure
+@@ -14188,7 +14188,7 @@ if ${ac_cv_func_wait3_rusage+:} false; t
+   $as_echo_n "(cached) " >&6
+ else
+   if test "$cross_compiling" = yes; then :
+-  ac_cv_func_wait3_rusage=no
++  ac_cv_func_wait3_rusage=yes
+ else
+   cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+ /* end confdefs.h.  */

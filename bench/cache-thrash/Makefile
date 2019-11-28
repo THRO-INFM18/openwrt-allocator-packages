@@ -7,7 +7,7 @@
 
 include $(TOPDIR)/rules.mk
 
-PKG_NAME:=cfrac
+PKG_NAME:=cache-thrash
 PKG_VERSION:=0.1
 PKG_RELEASE:=1
 
@@ -21,20 +21,20 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
-define Package/cfrac
+define Package/cache-thrash
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=
-  TITLE:=cfrac factorizes a given number
+  DEPENDS:=+libpthread
+  TITLE:=cache-thrash
 endef
 
-define Package/cfrac/description
+define Package/cache-thrash/description
   No one knows something about it, but it´s used for benchmarking malloc implementations.
 endef
 
-define Package/cfrac/install
+define Package/cache-thrash/install
 	$(INSTALL_DIR) $(1)/usr/local/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/bin/cfrac $(1)/usr/local/bin/
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/bin/cache-thrash $(1)/usr/local/bin/
 endef
 
-$(eval $(call BuildPackage,cfrac))
+$(eval $(call BuildPackage,cache-thrash))

@@ -25,7 +25,7 @@ define Package/shbench
   SECTION:=utils
   CATEGORY:=Utilities
   DEPENDS:=+libpthread
-  TITLE:=shbench factorizes a given number
+  TITLE:=shbench
 endef
 
 define Package/shbench/description

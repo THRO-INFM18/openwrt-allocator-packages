@@ -11,6 +11,7 @@ set(sources_files
 
 add_executable(rptest ${sources_files})
 target_compile_options(rptest PRIVATE -fpermissive)
+target_include_directories(rptest PRIVATE .)
 target_link_libraries(rptest pthread m)
 
 INSTALL(TARGETS rptest RUNTIME DESTINATION /usr/local/bin/)

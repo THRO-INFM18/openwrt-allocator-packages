@@ -5,6 +5,8 @@
 # See /LICENSE for more information.
 #
 
+# notes: warning: type defaults to 'int' in declaration of 'XXXX' [-Wimplicit-int]
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=espresso

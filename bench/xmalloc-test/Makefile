@@ -5,6 +5,8 @@
 # See /LICENSE for more information.
 #
 
+# notes: warning: initialization discards 'volatile' qualifier from pointer target type [-Wdiscarded-qualifiers]
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=xmalloc-test

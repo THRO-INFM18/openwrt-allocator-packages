@@ -5,6 +5,8 @@
 # See /LICENSE for more information.
 #
 
+# notes: produces a lot of warnings
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=barnes

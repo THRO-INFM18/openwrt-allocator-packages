@@ -5,6 +5,8 @@
 # See /LICENSE for more information.
 #
 
+# notes: test_common.h:51:10: fatal error: x86intrin.h: No such file or directory
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=alloc-test

@@ -5,6 +5,9 @@
 # See /LICENSE for more information.
 #
 
+# notes: mstress.c:48:26: warning: conversion from 'long long unsigned int' to 'uintptr_t' 
+#   {aka 'const unsigned int'} changes value from '13787848793156543929' to '484763065' [-Woverflow]
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mstress

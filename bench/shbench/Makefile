@@ -5,6 +5,8 @@
 # See /LICENSE for more information.
 #
 
+# notes: a lot of "critical" warings for sh8bench, sh6bench is good
+
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=shbench

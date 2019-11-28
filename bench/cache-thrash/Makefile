@@ -24,7 +24,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/cache-thrash
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libpthread
+  DEPENDS:=+libpthread +libstdcpp
   TITLE:=cache-thrash
 endef
 

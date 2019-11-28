@@ -24,7 +24,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/cfrac
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libm
+  DEPENDS:=
   TITLE:=cfrac factorizes a given number
 endef
 

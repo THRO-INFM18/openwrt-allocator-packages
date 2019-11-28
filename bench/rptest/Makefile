@@ -24,7 +24,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/rptest
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libm +libpthread
+  DEPENDS:=+libpthread
   TITLE:=rptest
 endef
 

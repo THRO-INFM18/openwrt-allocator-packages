@@ -24,7 +24,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/espresso
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libm
+  DEPENDS:=
   TITLE:=espresso
 endef
 

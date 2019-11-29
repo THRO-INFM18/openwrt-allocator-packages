@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.0)
-project(espresso CXX C)
-set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+project(espresso C)
+set(CMAKE_C_STANDARD 90)
 
 set(sources_files
     cofactor.c
@@ -48,7 +47,7 @@ set(sources_files
 )
 
 add_executable(espresso ${sources_files})
-target_compile_options(espresso PRIVATE $<$<C_COMPILER_ID:GNU>:-std=gnu89>)
+target_compile_options(espresso PRIVATE $<$<C_COMPILER_ID:GNU>:-Wno-int-conversion>)
 target_link_libraries(espresso m)
 
 INSTALL(TARGETS espresso RUNTIME DESTINATION /usr/bin/)

@@ -5,7 +5,8 @@
 # See /LICENSE for more information.
 #
 
-# notes: a lot of "critical" warings for sh8bench, sh6bench is good
+# notes: sh8bench a lot of "critical" warings
+# notes: sh6bench warning: #warning redirecting incorrect #include <sys/signal.h> to <signal.h> [-Wcpp]
 
 include $(TOPDIR)/rules.mk
 

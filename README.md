@@ -6,14 +6,14 @@ This packages contains libraries that can replace the malloc implementation of t
 
 Add the following line to `feeds.conf` which is at the root of OpenWrt source tree.
 
-	src-git openwrt-allocator-packages git://github.com/jneuhauser/openwrt-allocator-packages.git
+	src-git allocators git://github.com/jneuhauser/openwrt-allocator-packages.git
 
 Update the feeds.
 
-	./scripts/feeds update openwrt-allocator-packages
+	./scripts/feeds update allocators
 
 Activate packages in feeds
 
-	./scripts/feeds install -a -p openwrt-allocator-packages
+	./scripts/feeds install -a -p allocators
 
 Select what you want to include in the final image in `make menuconfig`.

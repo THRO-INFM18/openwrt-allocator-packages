@@ -1,4 +1,4 @@
-From 089531990bf685e19c3b19d6336a181b6c662f78 Mon Sep 17 00:00:00 2001
+From 4c984f10185c665dc60f4233121d89aa0ee7a05c Mon Sep 17 00:00:00 2001
 From: Johann Neuhauser <johann@it-neuhauser.de>
 Date: Fri, 29 Nov 2019 11:19:09 +0100
 Subject: [PATCH] Use CMake to generate Makefile and drop manual created
@@ -23,7 +23,7 @@ index 0000000..84c048a
 +/build/
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
-index 0000000..aebd918
+index 0000000..e8011b0
 --- /dev/null
 +++ b/CMakeLists.txt
 @@ -0,0 +1,22 @@
@@ -48,7 +48,7 @@ index 0000000..aebd918
 +target_include_directories(tinymembench PRIVATE .)
 +target_link_libraries(tinymembench m)
 +
-+INSTALL(TARGETS tinymembench RUNTIME DESTINATION /usr/local/bin/)
++INSTALL(TARGETS tinymembench RUNTIME DESTINATION /usr/bin/)
 diff --git a/Makefile b/Makefile
 deleted file mode 100644
 index 31ca60e..0000000

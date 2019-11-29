@@ -26,7 +26,7 @@ include $(INCLUDE_DIR)/cmake.mk
 define Package/alloc-test
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+libpthread +libstdcpp
+  DEPENDS:=+libpthread +libstdcpp @(i386||i686||x86_64)
   TITLE:=alloc-test
 endef
 

@@ -1,0 +1,88 @@
+From 089531990bf685e19c3b19d6336a181b6c662f78 Mon Sep 17 00:00:00 2001
+From: Johann Neuhauser <johann@it-neuhauser.de>
+Date: Fri, 29 Nov 2019 11:19:09 +0100
+Subject: [PATCH] Use CMake to generate Makefile and drop manual created
+ Makefile
+
+Signed-off-by: Johann Neuhauser <johann@it-neuhauser.de>
+---
+ .gitignore     |  1 +
+ CMakeLists.txt | 22 ++++++++++++++++++++++
+ Makefile       | 31 -------------------------------
+ 3 files changed, 23 insertions(+), 31 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 CMakeLists.txt
+ delete mode 100644 Makefile
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..84c048a
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1 @@
++/build/
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..aebd918
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,22 @@
++cmake_minimum_required(VERSION 3.0)
++project(tinymembench ASM C)
++set(CMAKE_C_STANDARD 11)
++
++set(asm_files
++    aarch64-asm.S
++    arm-neon.S
++    mips-32.S
++    x86-sse2.S
++)
++
++set(sources_files
++    asm-opt.c
++    main.c
++    util.c
++)
++
++add_executable(tinymembench ${asm_files} ${sources_files})
++target_include_directories(tinymembench PRIVATE .)
++target_link_libraries(tinymembench m)
++
++INSTALL(TARGETS tinymembench RUNTIME DESTINATION /usr/local/bin/)
+diff --git a/Makefile b/Makefile
+deleted file mode 100644
+index 31ca60e..0000000
+--- a/Makefile
++++ /dev/null
+@@ -1,31 +0,0 @@
+-all: tinymembench
+-
+-ifdef WINDIR
+-	CC = gcc
+-endif
+-
+-tinymembench: main.c util.o util.h asm-opt.h version.h asm-opt.o x86-sse2.o arm-neon.o mips-32.o aarch64-asm.o
+-	${CC} -O2 ${CFLAGS} -o tinymembench main.c util.o asm-opt.o x86-sse2.o arm-neon.o mips-32.o aarch64-asm.o -lm
+-
+-util.o: util.c util.h
+-	${CC} -O2 ${CFLAGS} -c util.c
+-
+-asm-opt.o: asm-opt.c asm-opt.h x86-sse2.h arm-neon.h mips-32.h
+-	${CC} -O2 ${CFLAGS} -c asm-opt.c
+-
+-x86-sse2.o: x86-sse2.S
+-	${CC} -O2 ${CFLAGS} -c x86-sse2.S
+-
+-arm-neon.o: arm-neon.S
+-	${CC} -O2 ${CFLAGS} -c arm-neon.S
+-
+-aarch64-asm.o: aarch64-asm.S
+-	${CC} -O2 ${CFLAGS} -c aarch64-asm.S
+-
+-mips-32.o: mips-32.S
+-	${CC} -O2 ${CFLAGS} -c mips-32.S
+-
+-clean:
+-	-rm -f tinymembench
+-	-rm -f tinymembench.exe
+-	-rm -f *.o

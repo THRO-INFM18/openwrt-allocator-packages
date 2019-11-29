@@ -10,7 +10,7 @@ framework:
 ```
 > dos2unix sh6bench.c
 > dos2unix sh6bench.patch
-> patch -p1 sh6bench.c sh6bench.patch
+> patch -p1 -o sh6bench-new.c sh6bench.c sh6bench.patch
 ```
 and
 ```
@@ -18,5 +18,3 @@ and
 > dos2unix SH8BENCH.C
 > patch -p1 -o sh8bench-new.c SH8BENCH.C sh8bench.patch
 ```
-
-This is done automatically by the `build-bench-env.sh` script.

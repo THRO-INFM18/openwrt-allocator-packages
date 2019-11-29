@@ -43,4 +43,4 @@ target_compile_options(cfrac PRIVATE $<$<C_COMPILER_ID:GNU>:-std=gnu89>)
 target_compile_definitions(cfrac PRIVATE NOMEMOPT=1)
 target_link_libraries(cfrac m)
 
-INSTALL(TARGETS cfrac RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS cfrac RUNTIME DESTINATION /usr/bin/)

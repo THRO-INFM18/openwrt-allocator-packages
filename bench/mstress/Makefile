@@ -39,8 +39,8 @@ CMAKE_OPTIONS+=\
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 define Package/mstress/install
-	$(INSTALL_DIR) $(1)/usr/local/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/bin/mstress $(1)/usr/local/bin/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/mstress $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,mstress))

@@ -10,4 +10,4 @@ set(sources_files
 add_executable(mstress ${sources_files})
 target_link_libraries(mstress pthread)
 
-INSTALL(TARGETS mstress RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS mstress RUNTIME DESTINATION /usr/bin/)

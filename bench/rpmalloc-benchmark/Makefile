@@ -68,8 +68,8 @@ define Build/Compile
 endef
 
 define Package/rpmalloc-benchmark/install
-	$(INSTALL_DIR) $(1)/usr/local/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/linux/release/$(PKG_TARGET_ARCH)/benchmark-* $(1)/usr/local/bin/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/linux/release/$(PKG_TARGET_ARCH)/benchmark-* $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,rpmalloc-benchmark))

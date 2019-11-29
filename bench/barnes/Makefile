@@ -38,8 +38,8 @@ CMAKE_OPTIONS+=\
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 
 define Package/barnes/install
-	$(INSTALL_DIR) $(1)/usr/local/bin
-	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/local/bin/barnes $(1)/usr/local/bin/
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/barnes $(1)/usr/bin/
 endef
 
 $(eval $(call BuildPackage,barnes))

@@ -10,4 +10,4 @@ set(sources_files
 add_executable(cache-scratch ${sources_files})
 target_link_libraries(cache-scratch pthread)
 
-INSTALL(TARGETS cache-scratch RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS cache-scratch RUNTIME DESTINATION /usr/bin/)

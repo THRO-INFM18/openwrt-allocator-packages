@@ -51,4 +51,4 @@ add_executable(espresso ${sources_files})
 target_compile_options(espresso PRIVATE $<$<C_COMPILER_ID:GNU>:-std=gnu89>)
 target_link_libraries(espresso m)
 
-INSTALL(TARGETS espresso RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS espresso RUNTIME DESTINATION /usr/bin/)

@@ -15,4 +15,4 @@ set(sources_files
 add_executable(barnes ${sources_files})
 target_link_libraries(barnes m)
 
-INSTALL(TARGETS barnes RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS barnes RUNTIME DESTINATION /usr/bin/)

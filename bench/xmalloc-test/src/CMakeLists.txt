@@ -10,4 +10,4 @@ set(sources_files
 add_executable(xmalloc-test ${sources_files})
 target_link_libraries(xmalloc-test pthread)
 
-INSTALL(TARGETS xmalloc-test RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS xmalloc-test RUNTIME DESTINATION /usr/bin/)

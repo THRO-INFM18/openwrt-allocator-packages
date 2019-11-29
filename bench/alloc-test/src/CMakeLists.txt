@@ -12,4 +12,4 @@ add_executable(alloc-test ${sources_files})
 target_compile_definitions(alloc-test PRIVATE BENCH=4)
 target_link_libraries(alloc-test pthread)
 
-INSTALL(TARGETS alloc-test RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS alloc-test RUNTIME DESTINATION /usr/bin/)

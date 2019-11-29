@@ -10,4 +10,4 @@ set(sources_files
 add_executable(cache-thrash ${sources_files})
 target_link_libraries(cache-thrash pthread)
 
-INSTALL(TARGETS cache-thrash RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS cache-thrash RUNTIME DESTINATION /usr/bin/)

@@ -10,4 +10,4 @@ set(sources_files
 add_executable(malloc-large ${sources_files})
 target_link_libraries(malloc-large pthread)
 
-INSTALL(TARGETS malloc-large RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS malloc-large RUNTIME DESTINATION /usr/bin/)

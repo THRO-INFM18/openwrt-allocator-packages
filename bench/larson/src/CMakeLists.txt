@@ -12,4 +12,4 @@ target_compile_options(larson PRIVATE -Wno-unused-result)
 target_compile_definitions(larson PRIVATE CPP=1)
 target_link_libraries(larson pthread)
 
-INSTALL(TARGETS larson RUNTIME DESTINATION /usr/local/bin/)
+INSTALL(TARGETS larson RUNTIME DESTINATION /usr/bin/)

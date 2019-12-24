@@ -80,6 +80,8 @@ define Package/mimalloc/install
 	$(INSTALL_DIR) $(1)/usr/lib/mimalloc-$(MAJOR_MINOR_VERSION)
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/mimalloc-$(MAJOR_MINOR_VERSION)/*.so* \
 		$(1)/usr/lib/mimalloc-$(MAJOR_MINOR_VERSION)/
+	$(LN) mimalloc-$(MAJOR_MINOR_VERSION)/libmimalloc$(if $(filter $(BUILD_VARIANT),secure),-$(BUILD_VARIANT)).so.$(MAJOR_MINOR_VERSION) \
+		$(1)/usr/lib/libmimalloc$(if $(filter $(BUILD_VARIANT),secure),-$(BUILD_VARIANT)).so
 endef
 
 Package/mimalloc-secure/install = $(Package/mimalloc/install)

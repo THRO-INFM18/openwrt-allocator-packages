@@ -119,7 +119,7 @@ run_benchmark() {
             ;;
         xmalloc-test)
             threads=$((4*NPROC))
-            run_with_time /dev/null /dev/null "$bench" "$bench" -w $threads -t 5 -s '-1'
+            run_with_time /dev/null /dev/null "$bench" "$bench" -w $threads -t 20 -s '-1'
             ;;
         *)
             echo "ERROR: unknown benchmark: $bench"

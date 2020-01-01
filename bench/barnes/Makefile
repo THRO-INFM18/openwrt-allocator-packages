@@ -40,6 +40,8 @@ CMAKE_OPTIONS+=\
 define Package/barnes/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/barnes $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/share/barnes
+	$(INSTALL_DATA) ./src/input $(1)/usr/share/barnes/input
 endef
 
 $(eval $(call BuildPackage,barnes))

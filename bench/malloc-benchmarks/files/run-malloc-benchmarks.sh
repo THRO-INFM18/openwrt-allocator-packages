@@ -1,8 +1,10 @@
 #!/bin/sh
 
+[ "$1" = DEBUG ] && set -x
+
 # config
 RESULT_FILE="/tmp/malloc-benchmarks/$(date +%Y%m%d%H%M%S)_malloc_benchmark.result"
-MALLOC_LIBS="libc-*.so libmimalloc.so libjemalloc.so librpmallocwrap.so"
+MALLOC_LIBS="libc*.so libmimalloc.so libjemalloc.so librpmallocwrap.so"
 ENABLED_TESTS="
 alloc-test
 barnes
@@ -21,7 +23,7 @@ xmalloc-test
 LD_PATHS="/lib /usr/lib /usr/local/lib"
 
 # auto cfg
-NPROC=$(sysctl -n hw.ncpu 2>/dev/null || nproc)
+NPROC=$(cat /proc/cpuinfo | grep processor | wc -l)
 
 echo "Searching for available malloc libraries..."
 LD_PATHS_TMP=
@@ -111,11 +113,11 @@ run_benchmark() {
             run_with_time /dev/null /dev/null $bench$NPROC $bench $NPROC 0 2 2 500 1000 200 8 64000
             #run_with_time /dev/null /dev/null $bench$NPROC $bench $NPROC 0 1 2 1000 1000 500 8 64000
             #run_with_time /dev/null /dev/null $bench$NPROC $bench $NPROC 0 2 2 500 1000 200 16 1600000
-            threads=$(echo "4*$NPROC" | bc)
+            let threads=4*$NPROC
             run_with_time /dev/null /dev/null $bench$threads $bench $threads 0 2 2 500 1000 200 8 64000
             ;;
         xmalloc-test)
-            threads=$(echo "2*$NPROC" | bc)
+            let threads=4*$NPROC
             run_with_time /dev/null /dev/null $bench $bench -w $threads -t 5 -s '-1'
             ;;
         *)
@@ -126,7 +128,7 @@ run_benchmark() {
 
 run_available_benchmarks_with_available_malloc_libs() {
     for lib in $AVAILABLE_MALLOC_LIBS ; do
-        LD_PRELOAD=$lib
+        LD_PRELOAD="/lib/libatomic.so.1 $lib"
         export LD_PRELOAD
         for bench in $AVAILABLE_BENCHMARKS ; do
             run_benchmark $bench

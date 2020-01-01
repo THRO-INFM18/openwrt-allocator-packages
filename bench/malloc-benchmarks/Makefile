@@ -47,7 +47,7 @@ Build/Configure = $(Build/Configure/Default)
 
 define Package/malloc-benchmarks/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_DATA) ./files/run-malloc-benchmarks.sh $(1)/usr/bin/run-malloc-benchmarks
+	$(INSTALL_BIN) ./files/run-malloc-benchmarks.sh $(1)/usr/bin/run-malloc-benchmarks
 endef
 
 $(eval $(call BuildPackage,malloc-benchmarks))

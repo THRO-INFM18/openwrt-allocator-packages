@@ -40,6 +40,8 @@ CMAKE_OPTIONS+=\
 define Package/espresso/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_INSTALL_DIR)/usr/bin/espresso $(1)/usr/bin/
+	$(INSTALL_DIR) $(1)/usr/share/espresso
+	$(INSTALL_DATA) ./src/largest.espresso $(1)/usr/share/espresso/largest.espresso
 endef
 
 $(eval $(call BuildPackage,espresso))

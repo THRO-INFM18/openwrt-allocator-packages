@@ -20,7 +20,7 @@ include $(INCLUDE_DIR)/package.mk
 define Package/malloc-benchmarks
   SECTION:=utils
   CATEGORY:=Utilities
-  DEPENDS:=+jemalloc +mimalloc +rpmalloc \
+  DEPENDS:=+time +jemalloc +mimalloc +rpmalloc \
     +(i386||i686||x86_64):alloc-test +barnes +cache-scratch +cache-thrash \
     +cfrac +espresso +larson +malloc-large +mstress +rptest +shbench +xmalloc-test
   TITLE:=malloc-benchmarks
@@ -46,8 +46,8 @@ endef
 Build/Configure = $(Build/Configure/Default)
 
 define Package/malloc-benchmarks/install
-	$(INSTALL_DIR) $(1)/usr/local/bin
-	$(INSTALL_DATA) ./files/run-malloc-benchmarks.sh $(1)/usr/local/bin/run-malloc-benchmarks
+	$(INSTALL_DIR) $(1)/usr/bin
+	$(INSTALL_DATA) ./files/run-malloc-benchmarks.sh $(1)/usr/bin/run-malloc-benchmarks
 endef
 
 $(eval $(call BuildPackage,malloc-benchmarks))

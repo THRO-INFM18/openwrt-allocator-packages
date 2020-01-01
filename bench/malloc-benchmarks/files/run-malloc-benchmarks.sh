@@ -21,6 +21,8 @@ sh8bench
 xmalloc-test
 "
 LD_PATHS="/lib /usr/lib /usr/local/lib"
+BARNES_INPUT_FILE="/usr/share/barnes/input"
+ESPRESSO_INPUT_FILE="/usr/share/espresso/largest.espresso"
 
 # auto cfg
 NPROC=$( grep -c processor /proc/cpuinfo )
@@ -61,7 +63,7 @@ run_with_time() {
     local cmd=$1
     shift
     local args
-    [ $# -gt 0 ] && args=$@
+    [ $# -gt 0 ] && args=$*
     local lib=${LD_PRELOAD##*/}
     lib=${lib%%.so*}
     GNU_TIME="$( type -P time ) --quiet --append --output $RESULT_FILE"
@@ -83,7 +85,7 @@ run_benchmark() {
             fi
             ;;
         barnes)
-            run_with_time /usr/share/barnes/input /dev/null "$bench" "$bench"
+            run_with_time "$BARNES_INPUT_FILE" /dev/null "$bench" "$bench"
             ;;
         cache-scratch|\
         cache-thrash)
@@ -96,7 +98,7 @@ run_benchmark() {
             run_with_time /dev/null /dev/null "$bench" "$bench" 175451865205073170563711388363274837927895
             ;;
         espresso)
-            run_with_time /dev/null /dev/null "$bench" "$bench" -s /usr/share/espresso/largest.espresso
+            run_with_time /dev/null /dev/null "$bench" "$bench" -s "$ESPRESSO_INPUT_FILE"
             ;;
         larson)
             run_with_time /dev/null /dev/null "$bench" "$bench" 2.5 7 8 1000 10000 42 100

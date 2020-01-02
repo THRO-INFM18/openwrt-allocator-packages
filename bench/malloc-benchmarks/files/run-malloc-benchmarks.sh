@@ -1,7 +1,5 @@
 #!/bin/sh
 
-[ "$1" = DEBUG ] && set -x
-
 # config
 RESULT_FILE="/tmp/malloc-benchmarks/$(date +%Y%m%d%H%M%S)_malloc_benchmark.result"
 MALLOC_LIBS="libc.so libmimalloc.so libjemalloc.so librpmallocwrap.so"
@@ -26,6 +24,10 @@ ESPRESSO_INPUT_FILE="/usr/share/espresso/largest.espresso"
 
 # auto cfg
 NPROC=$( grep -c processor /proc/cpuinfo )
+
+# args
+[ "$1" = DEBUG ] && set -x && shift
+[ $# -gt 0 ] && ENABLED_TESTS="$*"
 
 echo "Searching for available malloc libraries..."
 LD_PATHS_TMP=
@@ -66,10 +68,13 @@ run_with_time() {
     [ $# -gt 0 ] && args=$*
     local lib=${LD_PRELOAD##*/}
     lib=${lib%%.so*}
-    GNU_TIME="$( type -P time ) --quiet --append --output $RESULT_FILE"
+    GNU_TIME=$( type -P time )
     echo "Running $name with $lib"
     # We need word splitting for args, so no double quotes here!
-    $GNU_TIME --format "%U\\t%S\\t%E\\t%X\\t%D\\t%M\\t%F\\t%R\\t%W\\t$lib\\t$name\\t$cmd\\t$args" "$cmd" $args < "$input" > "$output" 2>&1
+    $GNU_TIME --format "%U\\t%S\\t%E\\t%X\\t%D\\t%M\\t%F\\t%R\\t%W\\t$lib\\t$name\\t$cmd\\t$args" \
+        --quiet --append --output "$RESULT_FILE" \
+        "$cmd" $args < "$input" > "$output" 2>&1
+    tail -n 1 "$RESULT_FILE"
 }
 
 run_benchmark() {

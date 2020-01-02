@@ -112,21 +112,21 @@ run_benchmark() {
             run_with_time /dev/null /dev/null "$bench" "$bench"
             ;;
         mstress)
-            run_with_time /dev/null /dev/null "$bench" "$bench" 1 200
+            run_with_time /dev/null /dev/null "$bench" "$bench" 1
             if [ "$NPROC" -gt 1 ] ; then
-                run_with_time /dev/null /dev/null "$bench$NPROC" "$bench" "$NPROC" 200
+                run_with_time /dev/null /dev/null "$bench$NPROC" "$bench" "$NPROC"
             fi
             ;;
         rptest)
-            run_with_time /dev/null /dev/null "$bench$NPROC" "$bench" "$NPROC" 0 2 2 500 1000 200 8 64000
+            run_with_time /dev/null /dev/null "$bench$NPROC" "$bench" "$NPROC" 0 2 2 500 1000 200 8 32000
             #run_with_time /dev/null /dev/null $bench$NPROC $bench $NPROC 0 1 2 1000 1000 500 8 64000
             #run_with_time /dev/null /dev/null $bench$NPROC $bench $NPROC 0 2 2 500 1000 200 16 1600000
             threads=$((4*NPROC))
-            run_with_time /dev/null /dev/null "$bench$threads" "$bench" "$threads" 0 2 2 500 1000 200 8 64000
+            run_with_time /dev/null /dev/null "$bench$threads" "$bench" "$threads" 0 2 2 500 1000 200 8 32000
             ;;
         xmalloc-test)
             threads=$((4*NPROC))
-            run_with_time /dev/null /dev/null "$bench" "$bench" -w $threads -t 20 -s '-1'
+            run_with_time /dev/null /dev/null "$bench" "$bench" -w $threads -t 5 -s '-1'
             ;;
         *)
             echo "ERROR: unknown benchmark: $bench"
@@ -140,6 +140,7 @@ run_available_benchmarks_with_available_malloc_libs() {
         export LD_PRELOAD
         for bench in $AVAILABLE_BENCHMARKS ; do
             run_benchmark "$bench"
+            sleep 5
         done
     done
 }

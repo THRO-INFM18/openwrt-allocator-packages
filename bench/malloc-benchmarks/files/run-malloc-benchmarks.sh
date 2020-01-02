@@ -144,14 +144,6 @@ run_available_benchmarks_with_available_malloc_libs() {
     done
 }
 
-create_csv() {
-    SEP=";"
-    [ $# -gt 0 ] && SEP=$1
-    sed "s/[[:space:]]/$SEP/g" "$RESULT_FILE" > "${RESULT_FILE}.csv"
-}
-
 mkdir -p "$(dirname "$RESULT_FILE")"
 
 run_available_benchmarks_with_available_malloc_libs
-
-create_csv ","

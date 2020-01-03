@@ -32,6 +32,8 @@ define Package/malloc-test/description
   No one knows something about it, but it´s used for benchmarking malloc implementations.
 endef
 
+TARGET_CFLAGS:=$(filter-out -O%,$(TARGET_CFLAGS))
+
 CMAKE_OPTIONS+=\
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
 

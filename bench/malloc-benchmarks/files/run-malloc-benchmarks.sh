@@ -11,6 +11,7 @@ cache-thrash
 cfrac
 espresso
 larson
+malloc-test
 malloc-large
 mstress
 rptest
@@ -107,6 +108,15 @@ run_benchmark() {
             ;;
         larson)
             run_with_time /dev/null /dev/null "$bench" "$bench" 2.5 7 8 1000 10000 42 100
+            ;;
+        malloc-test)
+            case "$(uname -m)" in
+                x86*|i?86) ITERATIONS="1000000000" ;;
+                aarch64|arm*) ITERATIONS="100000000" ;;
+                *) ITERATIONS="10000000" ;;
+            esac
+            run_with_time /dev/null /dev/null "${bench}1k" "$bench" 1024 $ITERATIONS "$NPROC"
+            run_with_time /dev/null /dev/null "${bench}10k" "$bench" 10240 $ITERATIONS "$NPROC"
             ;;
         malloc-large)
             run_with_time /dev/null /dev/null "$bench" "$bench"

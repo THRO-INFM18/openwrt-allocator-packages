@@ -22,7 +22,8 @@ define Package/malloc-benchmarks
   CATEGORY:=Utilities
   DEPENDS:=+time +jemalloc +mimalloc +rpmalloc \
     +(i386||i686||x86_64):alloc-test +barnes +cache-scratch +cache-thrash \
-    +cfrac +espresso +larson +malloc-large +mstress +rptest +shbench +xmalloc-test
+    +cfrac +espresso +larson +malloc-large +malloc-test +mstress +rptest \
+	+shbench +xmalloc-test
   TITLE:=malloc-benchmarks
 endef
 

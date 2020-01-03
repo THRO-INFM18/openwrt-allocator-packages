@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # config
-RESULT_FILE="/tmp/malloc-benchmarks/$(date +%Y%m%d%H%M%S)_malloc_benchmark.result"
+RESULT_FILE="malloc-benchmarks/$(date +%Y%m%d%H%M%S)_malloc_benchmark.result"
 MALLOC_LIBS="libc.so libmimalloc.so libjemalloc.so librpmallocwrap.so"
 ENABLED_TESTS="
 alloc-test

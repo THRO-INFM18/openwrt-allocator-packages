@@ -17,6 +17,8 @@
 
 #include <pthread.h>
 
+#include "mymalloc.h"
+
 #define USECSPERSEC 1000000
 #define pthread_attr_default NULL
 #define MAX_THREADS 50
@@ -107,8 +109,8 @@ void run_test(void)
 	gettimeofday(&start, NULL);
 
 	for (i = 0; i < total_iterations; i++) {
-		register void * buf;
-		buf = malloc(request_size);
+		volatile register void * buf;
+		buf = mymalloc(request_size);
 		free(buf);
 	}
 

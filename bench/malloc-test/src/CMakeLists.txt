@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(sources_files
     malloc-test.c
+    mymalloc.c
 )
 
 add_executable(malloc-test ${sources_files})

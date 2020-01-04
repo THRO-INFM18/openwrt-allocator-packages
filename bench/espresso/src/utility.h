@@ -20,6 +20,7 @@
     (obj) ? ((type *) gc_realloc((char *) obj, sizeof(type) * ((num)==0?1:(num)))) : \
 	    ((type *) gc_malloc(sizeof(type) * ((num)==0?1:(num))))
 #elif defined(CUSTOM_MALLOC)
+#include "mymalloc.h"
 #define ALLOC(type, num)	\
     ((type *) CUSTOM_MALLOC(sizeof(type) * (num)))
 #define REALLOC(type, obj, num)	\

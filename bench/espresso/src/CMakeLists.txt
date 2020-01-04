@@ -44,10 +44,17 @@ set(sources_files
     unate.c
     utility.c
     verify.c
+    mymalloc.c
 )
 
 add_executable(espresso ${sources_files})
 target_compile_options(espresso PRIVATE $<$<C_COMPILER_ID:GNU>:-Wno-int-conversion>)
+add_definitions(
+    -DCUSTOM_MALLOC=mymalloc
+    -DCUSTOM_REALLOC=myrealloc
+    -DCUSTOM_CALLOC=mycalloc
+    -DCUSTOM_FREE=free
+)
 target_link_libraries(espresso m)
 
 INSTALL(TARGETS espresso RUNTIME DESTINATION /usr/bin/)

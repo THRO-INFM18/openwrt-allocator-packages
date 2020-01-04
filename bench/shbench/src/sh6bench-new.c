@@ -35,6 +35,8 @@
 #include <assert.h>
 #include <limits.h>
 
+#include "mymalloc.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -275,7 +277,7 @@ void main(int argc, char *argv[])
 		}
 		else {
 		ulCallCount /= uThreadCount;
-		if ((tids = malloc(sizeof(ThreadID) * uThreadCount)) != NULL)
+		if ((tids = mymalloc(sizeof(ThreadID) * uThreadCount)) != NULL)
 		{
 			startCPU = clock();
 			startTime = time(NULL);
@@ -322,7 +324,7 @@ void main(int argc, char *argv[])
 
 void doBench(void *arg)
 { 
-  char **memory = malloc(ulCallCount * sizeof(void *));
+  char **memory = mymalloc(ulCallCount * sizeof(void *));
   int	size_base, size, iterations;
   int	repeat = ulCallCount;
   char **mp = memory;
@@ -353,7 +355,7 @@ void doBench(void *arg)
 			while (iterations--)
 			{ 
 
-				if (!memory || !(*mp ++ = (char *)malloc(size)))
+				if (!memory || !(*mp ++ = (char *) mymalloc(size)))
 				{
 					printf("Out of memory\n");
 					_exit (1);

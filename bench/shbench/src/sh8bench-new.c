@@ -30,6 +30,8 @@
 #include <assert.h>
 #include <limits.h>
 
+#include "mymalloc.h"
+
 #ifdef __cplusplus
 extern "C"
 {
@@ -296,15 +298,15 @@ void main(int argc, char *argv[])
 		ulForeignAllocCount /= (ulThreadCount * ulThreadCount);
 		ulForeignAllocCount *= (ulThreadCount * ulThreadCount);
 		
-		if ((tids = malloc(sizeof(ThreadID) * ulThreadCount)) == NULL)
+		if ((tids = mymalloc(sizeof(ThreadID) * ulThreadCount)) == NULL)
 			goto outOfMemory;
 
 		if (ulForeignAllocCount != 0)
 		{
-			if ((interThreadMem = malloc(sizeof(void *) * ulForeignAllocCount))
+			if ((interThreadMem = mymalloc(sizeof(void *) * ulForeignAllocCount))
 					 == NULL
 				 || (interThreadBuf
-					  = malloc(sizeof(InterThreadBuffer) * ulThreadCount))
+					  = mymalloc(sizeof(InterThreadBuffer) * ulThreadCount))
 						== NULL)
 				goto outOfMemory;
 
@@ -347,7 +349,7 @@ void main(int argc, char *argv[])
 				for (i = 0;  i < ulForeignAllocCount;  i++)
 				{
 					/*	make all foreign allocs equal size to maximize collisions */
-					void * volatile * volatile alloc = malloc(blockSizeHistogram[0].size);
+					void * volatile * volatile alloc = mymalloc(blockSizeHistogram[0].size);
 
 					if (alloc)
 						*alloc = foreignAllocs;
@@ -423,7 +425,7 @@ THREAD_FN_RETURN doBench(void *arg)
 											| MEM_FREE_ON_THREAD_TERM);
 #endif
 
-	memory = malloc(heapSize * sizeof(void *));
+	memory = mymalloc(heapSize * sizeof(void *));
 	mp = memory;
 	mpe = memory + heapSize;
 	save_start = mpe;
@@ -473,7 +475,7 @@ THREAD_FN_RETURN doBench(void *arg)
 		for (i = 0;  foreignAllocsLeft && i < 10;  i++)
 		{
 			/* make all foreign allocs equal size to maximize collisions */
-			void **alloc = malloc(blockSizeHistogram[0].size);
+			void **alloc = mymalloc(blockSizeHistogram[0].size);
 
 			if (alloc)
 				*alloc = foreignAllocs;
@@ -549,7 +551,7 @@ THREAD_FN_RETURN doBench(void *arg)
 				mp = memory;
 			}
 			else {
-				if (!(*mp++ = (char *)malloc(size)))
+				if (!(*mp++ = (char *) mymalloc(size)))
 			{
 				printf("Out of memory\n");
 				_exit (1);

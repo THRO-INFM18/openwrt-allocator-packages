@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 set(sources_files
     mstress.c
+    mymalloc.c
 )
 
 add_executable(mstress ${sources_files})

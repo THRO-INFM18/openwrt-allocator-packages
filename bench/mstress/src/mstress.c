@@ -12,9 +12,10 @@ terms of the MIT license.
 #ifdef _WIN32
 #include <alloc-bench-main.h>
 #else
-#define CUSTOM_MALLOC(n)     malloc(n)
+#include "mymalloc.h"
+#define CUSTOM_MALLOC(n)     mymalloc(n)
 #define CUSTOM_FREE(p)       free(p)
-#define CUSTOM_REALLOC(p,n)  realloc(p,n)
+#define CUSTOM_REALLOC(p,n)  myrealloc(p,n)
 static void bench_start_program() {}
 static void bench_end_program()   {}
 static void bench_start_thread()  {}

@@ -1,12 +1,9 @@
-// Benchmark supplied by Danila Kutenin (danlark1 @github) and modified by Daan Leijen
-#include <memory>
-#include <thread>
-#include <vector>
-
-const size_t N = 5000;
-
-#include <stdatomic.h>
+#include <stddef.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <limits.h>
+#include <stdatomic.h>
+#include "mymalloc.h"
 
 #define SMALL_MAX   2 * 1024
 #define LARGE_MAX   1 * 1024 * 1024
@@ -38,22 +35,17 @@ static void log_size(size_t size, char *name) {
         name, size, sum, max, min, count_small, count_large, count_huge);
 }
 
-void Foo() {
-    for (size_t i = 0; i < N; ++i) {
-        size_t sz = 1ull << 21;
-        log_size(sz, "new");
-        std::unique_ptr<char[]> a(new char[sz]);
-        for(size_t k = 0; k < sz; k++) { a[k] = 'x'; }
-    }
+void *mymalloc(size_t size) {
+    log_size(size, "malloc");
+    return malloc(size);
 }
 
-int main() {
-    std::vector<std::thread> thrs;
-    for (size_t i = 0; i < 1; ++i) {
-        thrs.emplace_back(Foo);
-    }
-    for (auto&& thr : thrs) {
-        thr.join();
-    }
-    return 0;
+void *mycalloc(size_t nmemb, size_t size) {
+    log_size((nmemb != 0 ? nmemb : 1) * size, "calloc");
+    return calloc(nmemb, size);
+}
+
+void *myrealloc(void *ptr, size_t size) {
+    log_size(size, "realloc");
+    return realloc(ptr, size);
 }

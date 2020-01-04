@@ -41,7 +41,7 @@ static void log_size(size_t size, const char *name) {
         count_huge++;
 
     fprintf(stderr,
-        "%s(): size = %d, sum = %d, max = %d, min = %d, small = %d, large = %d, huge = %d\n",
+        "%s(): size = %zu, sum = %lld, max = %zu, min = %zu, small = %lld, large = %lld, huge = %lld\n",
         name, size, sum, max, min, count_small, count_large, count_huge);
 }
 

@@ -83,7 +83,7 @@ void QueryPerformanceFrequency(long * x)
 #include <thread.h>
 #endif
 typedef void * VoidFunction (void *);
-void _beginthread (VoidFunction x, int, void * z)
+void _beginthread (VoidFunction x, int y, void * z)
 {
   pthread_t pt;
   pthread_attr_t pa;
@@ -147,6 +147,8 @@ void operator delete(void *pUserData )
   hdfree(pUserData) ;
 }
 #endif
+
+#include "mymalloc.h"
 
 #ifndef CUSTOM_MALLOC
 #define CUSTOM_MALLOC malloc

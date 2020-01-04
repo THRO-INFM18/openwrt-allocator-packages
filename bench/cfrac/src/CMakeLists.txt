@@ -36,6 +36,7 @@ set(cfrac_sources
     ptob.c
     ptou.c
     utop.c
+    mymalloc.c
 )
 
 add_executable(cfrac ${cfrac_sources})

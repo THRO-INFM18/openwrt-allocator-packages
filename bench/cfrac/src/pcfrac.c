@@ -15,6 +15,8 @@
 #include "precision.h"
 #include "pfactor.h"
 
+#include "mymalloc.h"
+
 extern int verbose;
 
 unsigned cfracNabort  = 0;
@@ -76,7 +78,7 @@ BitVector newBitVector(value, size)
 #ifdef BWGC 		 
    res = (BitVector) gc_malloc(msize);
 #else		 
-   res = (BitVector) malloc(msize);
+   res = (BitVector) mymalloc(msize);
 #endif
    if (res == (BitVector) 0) return res;
 
@@ -170,7 +172,7 @@ SolnPtr newSoln(n, pm, m, next, x, t, e)
 #ifdef BWGC 		 
    SolnPtr bp = (SolnPtr) gc_malloc(sizeof (Soln));
 #else		 
-   SolnPtr bp = (SolnPtr) malloc(sizeof (Soln));
+   SolnPtr bp = (SolnPtr) mymalloc(sizeof (Soln));
 #endif
 
    if (bp != (SolnPtr) 0) {
@@ -334,7 +336,7 @@ uvec pfactorbase(n, k, m, aborts)
 #ifdef BWGC 		 
    res = (uvec) gc_malloc(count * sizeof (unsigned));
 #else		 
-   res = (uvec) malloc(count * sizeof (unsigned));
+   res = (uvec) mymalloc(count * sizeof (unsigned));
 #endif
    if (res == (uvec) 0) goto doneMk;
 
@@ -379,7 +381,7 @@ EasPtr getEas(n, k, pm, m, aborts)
 #ifdef BWGC 		 
    eas = (EasPtr) gc_malloc((aborts+1) * sizeof (EasEntry));
 #else		 
-   eas = (EasPtr) malloc((aborts+1) * sizeof (EasEntry));
+   eas = (EasPtr) mymalloc((aborts+1) * sizeof (EasEntry));
 #endif
    if (eas == (EasPtr) 0) return eas;
 
@@ -533,14 +535,14 @@ precision pcfrac(n, maxCount)
 #ifdef BWGC 		 
    b      = (SolnPtr *) gc_malloc(bsize);
 #else		 
-   b      = (SolnPtr *) malloc(bsize);
+   b      = (SolnPtr *) mymalloc(bsize);
 #endif
    if (b == (SolnPtr *) 0) goto nomem;
 
 #ifdef BWGC 		 
    e = (solnvec) gc_malloc((m+1) * sizeof e[0]); 
 #else		 
-   e = (solnvec) malloc((m+1) * sizeof e[0]); 
+   e = (solnvec) mymalloc((m+1) * sizeof e[0]); 
 #endif
    if (e == (solnvec) 0) {
 nomem:

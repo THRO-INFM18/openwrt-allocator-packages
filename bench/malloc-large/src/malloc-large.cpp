@@ -5,19 +5,28 @@
 
 const size_t N = 5000;
 
-#include <stdatomic.h>
+#include <stdio.h>
 #include <limits.h>
+/* Static vars are thread safe in C++11 and above */
+#ifdef __cplusplus
+#define SIZE_T size_t
+#define LLONG long long
+#else
+#include <stdatomic.h>
+#define SIZE_T atomic_size_t
+#define LLONG atomic_llong
+#endif
 
-#define SMALL_MAX   2 * 1024
-#define LARGE_MAX   1 * 1024 * 1024
+static const size_t small_max = 2 * 1024;
+static const size_t large_max = 1 * 1024 * 1024;
 
-static void log_size(size_t size, char *name) {
-    static atomic_size_t max = 0;
-    static atomic_size_t min = UINT_MAX;
-    static atomic_llong sum = 0;
-    static atomic_llong count_small = 0;
-    static atomic_llong count_large = 0;
-    static atomic_llong count_huge = 0;
+static void log_size(size_t size, const char *name) {
+    static SIZE_T max = 0;
+    static SIZE_T min = UINT_MAX;
+    static LLONG sum = 0;
+    static LLONG count_small = 0;
+    static LLONG count_large = 0;
+    static LLONG count_huge = 0;
 
     sum += (long long) size;
 
@@ -26,9 +35,9 @@ static void log_size(size_t size, char *name) {
     if(size > max)
         max = size;
 
-    if(size <= (size_t) (SMALL_MAX))
+    if(size <= small_max)
         count_small++;
-    else if(size <= (size_t) (LARGE_MAX))
+    else if(size <= large_max)
         count_large++;
     else
         count_huge++;

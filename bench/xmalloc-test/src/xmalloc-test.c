@@ -27,9 +27,11 @@
 
 #include "random.h"
 
+#include "mymalloc.h"
+
 #define CACHE_ALIGNED 1
 
-#define xmalloc malloc
+#define xmalloc mymalloc
 #define xfree free
 
 #define DEFAULT_OBJECT_SIZE 1024

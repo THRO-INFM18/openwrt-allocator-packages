@@ -1,8 +1,16 @@
 #include <stddef.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <limits.h>
+
+#ifdef __cplusplus
+#include <atomic>
+#include <iostream>
+using namespace std;
+#else
 #include <stdatomic.h>
+#include <stdio.h>
+#endif
+
 #include "mymalloc.h"
 
 #define SMALL_MAX   2 * 1024
@@ -30,9 +38,21 @@ static void log_size(size_t size, char *name) {
     else
         count_huge++;
 
+#ifdef __cplusplus
+    cerr << name << "(): " <<
+        "size = " << size <<
+        ", sum = " << sum <<
+        ", max = " << max <<
+        ", min = " << min <<
+        ", small = ", count_small <<
+        ", large = " << count_large <<
+        ", huge = " << count_huge <<
+        endl;
+#else
     fprintf(stderr,
         "%s(): size = %d, sum = %d, max = %d, min = %d, small = %d, large = %d, huge = %d\n",
         name, size, sum, max, min, count_small, count_large, count_huge);
+#endif
 }
 
 void *mymalloc(size_t size) {

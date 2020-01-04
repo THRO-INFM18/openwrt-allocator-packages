@@ -5,6 +5,8 @@
 #  include <malloc.h>
 #endif
 
+#include "mymalloc.h"
+
 int
 benchmark_initialize() {
 	return 0;
@@ -35,7 +37,7 @@ benchmark_malloc(size_t alignment, size_t size) {
 		return ptr;
 	}
 	else {
-		return calloc(1,size);
+		return mycalloc(1,size);
 	}
 }
 

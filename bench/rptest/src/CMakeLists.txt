@@ -7,6 +7,7 @@ set(sources_files
     rptest.c
     thread.c
     timer.c
+    mymalloc.c
 )
 
 add_executable(rptest ${sources_files})

@@ -77,6 +77,8 @@ Command line options:
 #include <math.h>
 #include <time.h>
 
+#include "mymalloc.h"
+
 string defv[] = {                 /* DEFAULT PARAMETER VALUES              */
     /* file names for input/output                                         */
     "in=",                        /* snapshot of initial conditions        */
@@ -177,7 +179,7 @@ ANLinit()
    {;};
    /* Allocate global, shared memory */
 
-   Global = (struct GlobalMemory *) malloc(sizeof(struct GlobalMemory));;
+   Global = (struct GlobalMemory *) mymalloc(sizeof(struct GlobalMemory));;
    if (Global==NULL) error("No initialization for Global\n");
     
    {;};
@@ -243,13 +245,13 @@ tab_init()
    maxleaf = (int) ((double) fleaves * nbody);
    maxcell = fcells * maxleaf;
    for (i = 0; i < NPROC; ++i) {
-      Local[i].ctab = (cellptr) malloc((maxcell / NPROC) * sizeof(cell));;
-      Local[i].ltab = (leafptr) malloc((maxleaf / NPROC) * sizeof(leaf));;
+      Local[i].ctab = (cellptr) mymalloc((maxcell / NPROC) * sizeof(cell));;
+      Local[i].ltab = (leafptr) mymalloc((maxleaf / NPROC) * sizeof(leaf));;
    }
 
    /*allocate space for personal lists of body pointers */
    maxmybody = (nbody+maxleaf*MAX_BODIES_PER_LEAF)/NPROC; 
-   Local[0].mybodytab = (bodyptr*) malloc(NPROC*maxmybody*sizeof(bodyptr));;
+   Local[0].mybodytab = (bodyptr*) mymalloc(NPROC*maxmybody*sizeof(bodyptr));;
    /* space is allocated so that every */
    /* process can have a maximum of maxmybody pointers to bodies */ 
    /* then there is an array of bodies called bodytab which is  */
@@ -257,10 +259,10 @@ tab_init()
    /* file is read */
    maxmycell = maxcell / NPROC;
    maxmyleaf = maxleaf / NPROC;
-   Local[0].mycelltab = (cellptr*) malloc(NPROC*maxmycell*sizeof(cellptr));;
-   Local[0].myleaftab = (leafptr*) malloc(NPROC*maxmyleaf*sizeof(leafptr));;
+   Local[0].mycelltab = (cellptr*) mymalloc(NPROC*maxmycell*sizeof(cellptr));;
+   Local[0].myleaftab = (leafptr*) mymalloc(NPROC*maxmyleaf*sizeof(leafptr));;
 
-   CellLock = (struct CellLockType *) malloc(sizeof(struct CellLockType));;
+   CellLock = (struct CellLockType *) mymalloc(sizeof(struct CellLockType));;
    {;};
 }
 
@@ -392,7 +394,7 @@ testdata()
 
    headline = "Hack code: Plummer model";
    Local[0].tnow = 0.0;
-   bodytab = (bodyptr) malloc(nbody * sizeof(body));;
+   bodytab = (bodyptr) mymalloc(nbody * sizeof(body));;
    if (bodytab == NULL) {
       error("testdata: not enuf memory\n");
    }

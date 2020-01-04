@@ -25,6 +25,8 @@
     
 #include "code.h"
 
+#include "mymalloc.h"
+
 void in_int (), in_real (), in_vector ();
 void out_int (), out_real (), out_vector ();
 void diagnostics (unsigned int ProcessId);
@@ -59,7 +61,7 @@ inputdata ()
    for (i = 0; i < MAX_PROC; i++) {
       Local[i].tnow = tnow;
    }
-   bodytab = (bodyptr) malloc(nbody * sizeof(body));;
+   bodytab = (bodyptr) mymalloc(nbody * sizeof(body));;
    if (bodytab == NULL)
       error("inputdata: not enuf memory\n");
    for (p = bodytab; p < bodytab+nbody; p++) {

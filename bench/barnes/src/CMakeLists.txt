@@ -10,6 +10,7 @@ set(sources_files
     grav.c
     getparam.c
     util.c
+    mymalloc.c
 )
 
 add_executable(barnes ${sources_files})

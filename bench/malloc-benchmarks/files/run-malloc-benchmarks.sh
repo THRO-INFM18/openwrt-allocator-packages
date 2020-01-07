@@ -135,8 +135,14 @@ run_benchmark() {
             run_with_time /dev/null /dev/null "$bench$threads" "$bench" "$threads" 0 2 2 500 1000 200 8 32000
             ;;
         xmalloc-test)
+            case "$(uname -m)" in
+                x86*|i?86|aarch64|arm*) COUNT="100000000" ;;
+                *) COUNT="10000000" ;;
+            esac
             threads=$((4*NPROC))
-            run_with_time /dev/null /dev/null "$bench" "$bench" -w $threads -t 5 -s '-1'
+            #run_with_time /dev/null /dev/null "$bench" "$bench" -w $threads -t 5 -s '-1'
+            run_with_time /dev/null /dev/null "$bench$NPROC" "$bench" -w "$NPROC" -c "$COUNT" -s '-1'
+            run_with_time /dev/null /dev/null "$bench$threads" "$bench" -w "$threads" -c "$COUNT" -s '-1'
             ;;
         *)
             echo "ERROR: unknown benchmark: $bench"

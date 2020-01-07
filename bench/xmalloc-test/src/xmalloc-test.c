@@ -21,6 +21,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 #include <unistd.h>
+#include <stdatomic.h>
 //#include "xmalloc-config.h"
 //#include "xmalloc.h"
 
@@ -37,6 +38,7 @@ int debug_flag = 0;
 int verbose_flag = 0;
 #define num_workers_default 4
 int num_workers = num_workers_default;
+long count_frees = 0;
 double run_time = 5.0;
 int object_size = DEFAULT_OBJECT_SIZE;
 /* array for thread ids */
@@ -50,6 +52,8 @@ struct counter {
 ;
 };
 struct counter *counters;
+
+atomic_long global_free_counter = 0;
 
 volatile int done_flag = 0;
 struct timeval begin;
@@ -155,6 +159,7 @@ void *mem_releaser(void *arg) {
       xfree(b);
     }
     counters[thread_id].c += OBJECTS_PER_BATCH;
+    atomic_fetch_add_explicit(&global_free_counter, OBJECTS_PER_BATCH, memory_order_relaxed);
   }
   return NULL;
 }
@@ -189,10 +194,22 @@ int run_memory_free_test()
 		}
 	}
 
-	if (verbose_flag) printf("Testing for %.2f seconds\n\n", run_time);
+	if (verbose_flag )
+	  if (count_frees > 0)
+	    printf("Testing with %d frees\n\n", count_frees);
+	  else
+	    printf("Testing for %.2f seconds\n\n", run_time);
 
 	while (1) {
 	  usleep(1000);
+	  if (count_frees > 0) {
+	    if (atomic_load(&global_free_counter) >= count_frees) {
+	      atomic_store(&done_flag, 1);
+	      pthread_cond_broadcast(&empty_cv);
+	      pthread_cond_broadcast(&full_cv);
+	      break;
+	    }
+	  } else
 	  if (elapsed_time(&begin) > run_time) {
 	    atomic_store(&done_flag, 1);
 	    pthread_cond_broadcast(&empty_cv);
@@ -230,6 +247,7 @@ int run_memory_free_test()
 void usage(char *prog)
 {
 	printf("%s [-w workers] [-t run_time] [-d] [-v]\n", prog);
+	printf("\t -c number of free to stop (disables run time\n");
 	printf("\t -w number of producer threads (and number of consumer threads), default %d\n", num_workers_default);
 	printf("\t -t run time in seconds, default 20.0 seconds.\n");
 	printf("\t -s size of object to allocate (default %d bytes) (specify -1 to get many different object sizes)\n", DEFAULT_OBJECT_SIZE);
@@ -241,10 +259,13 @@ void usage(char *prog)
 int main(int argc, char **argv)
 {
 	int c;
-	while ((c = getopt(argc, argv, "w:t:ds:v")) != -1) {
+	while ((c = getopt(argc, argv, "c:w:t:ds:v")) != -1) {
 
 		switch (c) {
 
+		case 'c':
+			count_frees = atol(optarg);
+			break;
 		case 'w':
 			num_workers = atoi(optarg);
 			break;

@@ -2,11 +2,11 @@
 
 This packages contains libraries that can replace the malloc implementation of the used c-library.
 
-# Usage inside the QpenWrt buildroot or SDK
+# Usage inside the OpenWrt buildroot or SDK
 
 Add the following line to `feeds.conf` which is at the root of OpenWrt source tree.
 
-	src-git allocators git://github.com/jneuhauser/openwrt-allocator-packages.git
+	src-git allocators git://github.com/THRO-INFM18/openwrt-allocator-packages.git
 
 Update the feeds.
 

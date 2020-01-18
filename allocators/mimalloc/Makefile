@@ -36,6 +36,11 @@ define Package/mimalloc/default
   TITLE:=mimalloc general purpose allocator
 endef
 
+define Package/mimalloc/description/default
+  mimalloc (pronounced "me-malloc") is a general purpose allocator with excellent performance characteristics.
+  Initially developed by Daan Leijen for the run-time systems of the Koka and Lean languages.
+endef
+
 define Package/mimalloc
   $(call Package/mimalloc/default)
   VARIANT:=default
@@ -43,18 +48,18 @@ define Package/mimalloc
 endef
 
 define Package/mimalloc/description
-  mimalloc (pronounced "me-malloc") is a general purpose allocator with excellent performance characteristics.
-  Initially developed by Daan Leijen for the run-time systems of the Koka and Lean languages.
+  $(call Package/mimalloc/description/default)
 endef
 
 define Package/mimalloc-secure
   $(call Package/mimalloc/default)
   TITLE+=(secure)
   VARIANT:=secure
+  PROVIDES:=mimalloc
 endef
 
 define Package/mimalloc-secure/description
-  $(call Package/mimalloc/description)
+  $(call Package/mimalloc/description/default)
 
   mimalloc in secure mode, uses guard pages, randomized allocation,
   encrypted free lists, etc. to protect against various heap vulnerabilities.
